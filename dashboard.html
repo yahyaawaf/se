@@ -1,0 +1,26 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b5ea8">
+<title>لوحة التحكم | TSC SP128</title><link rel="icon" href="./assets/logo.png">
+<link rel="stylesheet" href="./css/variables.css"><link rel="stylesheet" href="./css/layout.css"><link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/animations.css"><link rel="stylesheet" href="./css/responsive.css"></head>
+<body>
+<header class="site-header">
+  <a class="brand" href="./index.html"><img src="./assets/logo.png" alt="شعار المصدر"><span>جودة إنشاء شبكة التوزيع الأرضية</span></a>
+  <button class="nav-toggle" type="button" aria-label="فتح القائمة" data-nav-toggle>☰</button>
+  <nav class="main-nav" data-nav>
+    <a href="./index.html">الرئيسية</a><a href="./course.html">عن البرنامج</a><a href="./lessons.html">الدروس</a>
+    <a href="./gallery.html">الصور والأشكال</a><a href="./tables.html">الجداول</a><a href="./dashboard.html">لوحة التحكم</a>
+    <a href="./ar.html">AR</a><a href="./vr.html">VR</a><a href="./mr.html">MR</a><a href="./reports.html">التقارير</a>
+  </nav>
+</header>
+<main>
+<section class="page-hero compact"><span class="eyebrow">لوحة التحكم</span><h1>إدارة التدريب والحضور</h1><p>البيانات تُحفظ محليًا عبر LocalStorage.</p></section>
+<section class="section"><div class="card-grid stats" id="dashboard-stats"></div><div class="dashboard-grid">
+<article class="card"><div class="card-head"><h2>المتدربون</h2><button class="btn small primary" id="add-trainee">إضافة متدرب</button></div>
+<input id="trainee-search" type="search" placeholder="بحث بالاسم"><div class="table-wrap"><table><thead><tr><th>الاسم</th><th>المجموعة</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="trainee-body"></tbody></table></div></article>
+<article class="card"><div class="card-head"><h2>تسجيل الحضور</h2><select id="attendance-lecture"></select></div><div id="attendance-list" class="attendance-list"></div></article></div>
+<article class="card"><h2>المحاضرات</h2><div class="table-wrap"><table><thead><tr><th>الدرس</th><th>الساعات</th><th>الحالة</th></tr></thead><tbody id="lecture-body"></tbody></table></div></article></section>
+</main>
+<footer class="site-footer"><p>منصة تدريبية تفاعلية مبنية على المصدر الأصلي TSC SP128.</p>
+<p class="muted">تنبيه: الملف الأصلي يتضمن تصنيفًا داخليًا؛ لا تنشريه في مستودع عام دون صلاحية.</p></footer>
+<script type="module" src="./js/app.js"></script><script type="module" src="./js/trainees.js"></script><script type="module" src="./js/lectures.js"></script><script type="module" src="./js/attendance.js"></script></body></html>
