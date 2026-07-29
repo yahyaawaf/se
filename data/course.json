@@ -1,0 +1,48 @@
+{
+  "title": "جودة إنشاء شبكة التوزيع الأرضية",
+  "code": "TSC SP128",
+  "type": "TEXTBOOK/WORKBOOK",
+  "totalHours": 12,
+  "pages": 184,
+  "sourceFile": "./assets/docs/SP128.pdf",
+  "classificationNotice": "يظهر في الملف الأصلي تصنيف داخلي؛ يوصى بإبقاء مستودع GitHub خاصًا ما لم توجد صلاحية نشر.",
+  "programObjectivesSourcePage": 5,
+  "hoursSourcePage": 7,
+  "lessons": [
+    {
+      "id": 1,
+      "title": "تمديد الكابلات ذات الجهد المتوسط",
+      "startPage": 9,
+      "endPage": 52,
+      "hours": 3
+    },
+    {
+      "id": 2,
+      "title": "أعمال تركيب النهايات الطرفية لكابلات الجهد المتوسط",
+      "startPage": 53,
+      "endPage": 92,
+      "hours": 2
+    },
+    {
+      "id": 3,
+      "title": "تمديد كابلات الجهد المنخفض",
+      "startPage": 93,
+      "endPage": 126,
+      "hours": 3
+    },
+    {
+      "id": 4,
+      "title": "النهايات الطرفية لكابلات الجهد المنخفض",
+      "startPage": 127,
+      "endPage": 144,
+      "hours": 2
+    },
+    {
+      "id": 5,
+      "title": "الممارسات الخاطئة في أعمال شبكة التوزيع الأرضية",
+      "startPage": 145,
+      "endPage": 181,
+      "hours": 2
+    }
+  ]
+}
