@@ -1,1 +1,0 @@
-let index=[];export async function loadSearch(){if(index.length)return index;const r=await fetch('./data/pages.json');index=await r.json();return index}export async function searchPages(term,limit=30){term=term.trim().toLowerCase();if(!term)return[];const pages=await loadSearch();return pages.filter(p=>(p.text||'').toLowerCase().includes(term)).slice(0,limit)}
