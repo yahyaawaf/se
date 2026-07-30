@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  جودة إنشاء شبكة التوزيع الأرضية — TSC SP128
+  موقع تعليمي عربي (RTL) — HTML5 + CSS3 + JavaScript بدون أي مكتبات خارجية
+  ----------------------------------------------------------------------------
+  محتويات المشروع:
+    index.html                 هذا الملف (التصميم + المنطق)
+    assets/data/book.js        نص الكتاب كاملاً مستخرجًا صفحة بصفحة (184 صفحة)
+    assets/images/pages/       صور صفحات الكتاب p-001.jpg … p-184.jpg
+    assets/docs/SP128.pdf      الكتاب الأصلي للتحميل والاستعراض
+    assets/images/             الغلاف والأيقونة
+  ----------------------------------------------------------------------------
+  التعديل: كل الإعدادات في كائن SITE_DATA أسفل الملف.
+  ============================================================================
+-->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#07182b" />
+<title>جودة إنشاء شبكة التوزيع الأرضية — TSC SP128</title>
+<meta name="description" content="منصة تدريبية عربية تفاعلية لدورة جودة إنشاء شبكة التوزيع الأرضية TSC SP128: خمسة دروس، 12 ساعة تدريبية، شرح موسّع من الكتاب، قارئ كتاب بـ184 صفحة، معرض صور، اختبارات، وتحميل الكتاب PDF." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="جودة إنشاء شبكة التوزيع الأرضية — TSC SP128" />
+<meta property="og:description" content="شرح موسّع لكل دروس الكتاب مع قارئ صفحات تفاعلي ومعرض صور واختبارات وتحميل الكتاب." />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="assets/images/favicon.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+/* ==========================================================================
+   1) نظام التصميم
+   ========================================================================== */
+:root{
+  --navy:#0B2A46; --navy-2:#07182b; --ink:#0d1b2a;
+  --gold:#E3B341; --gold-2:#C8912A;
+  --teal:#17B0A6; --sky:#38BDF8;
+  --bg:#F3F6FB; --surface:#FFFFFF; --surface-2:#F8FAFD;
+  --text:#0F1E2E; --muted:#5A6B7C; --line:#E2E9F1;
+  --radius:18px; --radius-sm:12px;
+  --shadow:0 10px 30px -18px rgba(7,24,43,.45);
+  --shadow-lg:0 30px 60px -30px rgba(7,24,43,.55);
+  --max:1200px;
+  --grad:linear-gradient(135deg,var(--gold),#F5D07A 45%,var(--gold-2));
+  --grad-cool:linear-gradient(135deg,var(--teal),var(--sky));
+}
+html[data-theme="dark"]{
+  --bg:#061422; --surface:#0C2135; --surface-2:#0A1B2C;
+  --text:#EAF2FA; --muted:#9CB2C6; --line:#183350;
+  --shadow:0 10px 30px -18px rgba(0,0,0,.8);
+  --shadow-lg:0 30px 60px -28px rgba(0,0,0,.85);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  margin:0;font-family:"Tajawal",system-ui,sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.9;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.section{padding:88px 0;position:relative}
+.section.alt{background:var(--surface-2)}
+h1,h2,h3,h4{line-height:1.35;margin:0 0 .5em;font-weight:800;letter-spacing:-.2px}
+h2{font-size:clamp(26px,3.4vw,40px)}
+p{margin:0 0 1em}
+.lead{color:var(--muted);font-size:1.06rem;max-width:70ch}
+
+/* شارة القسم */
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:13px;
+  letter-spacing:1px;color:var(--gold-2);background:color-mix(in oklab,var(--gold) 18%,transparent);
+  border:1px solid color-mix(in oklab,var(--gold) 40%,transparent);padding:6px 14px;border-radius:999px;margin-bottom:14px}
+html[data-theme="dark"] .eyebrow{color:var(--gold)}
+.head{max-width:820px;margin-bottom:44px}
+
+/* أزرار */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 24px;border-radius:999px;
+  font-weight:800;border:1px solid transparent;cursor:pointer;transition:.25s transform,.25s box-shadow,.25s background;font-size:16px}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:var(--grad);color:#20160A;box-shadow:0 14px 30px -14px rgba(227,179,65,.8)}
+.btn-ghost{background:transparent;border-color:color-mix(in oklab,var(--text) 22%,transparent);color:var(--text)}
+.btn-solid{background:var(--navy);color:#fff}
+html[data-theme="dark"] .btn-solid{background:var(--grad-cool);color:#05202a}
+.btn-sm{padding:9px 16px;font-size:14px}
+
+/* ==========================================================================
+   2) الرأس والقائمة
+   ========================================================================== */
+.progress{position:fixed;inset-block-start:0;inset-inline:0;height:3px;z-index:70;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--grad)}
+header{position:fixed;inset-block-start:0;inset-inline:0;z-index:60;transition:.3s}
+header .bar{display:flex;align-items:center;gap:14px;height:74px}
+header::before{content:"";position:absolute;inset:0;background:color-mix(in oklab,var(--surface) 78%,transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:.3s;opacity:0}
+header.stuck::before{opacity:1;border-bottom-color:var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:17px;position:relative;z-index:2;white-space:nowrap}
+.brand .mark{width:42px;height:42px;border-radius:13px;background:var(--grad);display:grid;place-items:center;
+  color:#20160A;font-weight:900;box-shadow:0 10px 22px -12px rgba(227,179,65,.9)}
+.brand small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:2px}
+nav.main{display:flex;gap:4px;margin-inline-start:auto;position:relative;z-index:2;flex-wrap:wrap}
+nav.main a{padding:8px 12px;border-radius:999px;font-weight:600;font-size:15px;color:var(--muted);transition:.2s}
+nav.main a:hover{color:var(--text);background:color-mix(in oklab,var(--text) 7%,transparent)}
+nav.main a.active{color:var(--text);background:color-mix(in oklab,var(--gold) 22%,transparent)}
+.tools{display:flex;gap:8px;align-items:center;position:relative;z-index:2}
+.icon-btn{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--text);transition:.2s}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--gold)}
+.burger{display:none}
+@media(max-width:1080px){
+  nav.main{position:fixed;inset-block-start:74px;inset-inline:0;flex-direction:column;background:var(--surface);
+    border-block:1px solid var(--line);padding:12px;gap:2px;transform:translateY(-140%);transition:.35s;box-shadow:var(--shadow)}
+  nav.main.open{transform:none}
+  nav.main a{font-size:17px;padding:12px}
+  .burger{display:grid}
+}
+
+/* ==========================================================================
+   3) الواجهة الرئيسية (Hero)
+   ========================================================================== */
+.hero{position:relative;padding:150px 0 90px;overflow:hidden;color:#EAF2FA;
+  background:radial-gradient(1200px 600px at 80% -10%,#134b73 0%,transparent 60%),
+             radial-gradient(900px 500px at 0% 30%,#0d5f58 0%,transparent 55%),
+             linear-gradient(160deg,var(--navy-2),#0B2A46 60%,#07182b)}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:float 14s ease-in-out infinite}
+.hero .b1{width:380px;height:380px;background:#E3B341;inset-block-start:-90px;inset-inline-start:-60px}
+.hero .b2{width:420px;height:420px;background:#17B0A6;inset-block-end:-160px;inset-inline-end:-90px;animation-delay:-6s}
+@keyframes float{50%{transform:translate3d(0,-34px,0) scale(1.08)}}
+.hero .grid-lines{position:absolute;inset:0;opacity:.12;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:52px 52px;mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent)}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(32px,5vw,58px);font-weight:900;margin-bottom:18px}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#C3D6E6;font-size:1.1rem;max-width:60ch}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.pill{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#DCE9F5}
+.cover-card{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.7);
+  transform:perspective(1200px) rotateY(6deg) rotateX(3deg);transition:.5s}
+.cover-card:hover{transform:perspective(1200px) rotateY(0) rotateX(0) translateY(-6px)}
+.cover-card::after{content:"TSC SP128";position:absolute;inset-block-end:14px;inset-inline-start:14px;
+  background:var(--grad);color:#20160A;font-weight:900;font-size:12px;padding:6px 12px;border-radius:999px;letter-spacing:1px}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.cover-card{max-width:340px;margin-inline:auto;transform:none}}
+
+/* شريط الإحصاءات */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:46px;position:relative;z-index:2}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);
+  padding:20px;text-align:center;backdrop-filter:blur(6px)}
+.stat b{display:block;font-size:clamp(26px,3.6vw,38px);font-weight:900;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:14px;color:#BDD1E2}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ==========================================================================
+   4) البطاقات العامة
+   ========================================================================== */
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:940px){.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.3s}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:color-mix(in oklab,var(--gold) 45%,var(--line))}
+.card::before{content:"";position:absolute;inset-block-start:0;inset-inline:0;height:3px;background:var(--grad);
+  transform:scaleX(0);transform-origin:right;transition:.35s}
+.card:hover::before{transform:scaleX(1)}
+.card .ico{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:24px;margin-bottom:14px;
+  background:color-mix(in oklab,var(--gold) 16%,transparent);border:1px solid color-mix(in oklab,var(--gold) 34%,transparent)}
+.card h3{font-size:19px;margin-bottom:8px}
+.card p{color:var(--muted);margin:0;font-size:15.5px}
+
+/* قائمة المخرجات */
+.outcomes{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.outcomes{grid-template-columns:1fr}}
+.outcome{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px}
+.outcome i{flex:0 0 28px;height:28px;border-radius:9px;background:var(--grad);color:#20160A;display:grid;place-items:center;
+  font-style:normal;font-weight:900;font-size:14px}
+
+/* ==========================================================================
+   5) الدروس
+   ========================================================================== */
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  margin-bottom:18px;overflow:hidden}
+.lesson > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:22px 24px}
+.lesson > summary::-webkit-details-marker{display:none}
+.lesson .no{width:56px;height:56px;border-radius:16px;background:var(--grad);color:#20160A;display:grid;place-items:center;
+  font-weight:900;font-size:22px;box-shadow:0 12px 24px -14px rgba(227,179,65,.9)}
+.lesson h3{margin:0;font-size:20px}
+.lesson .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:12.5px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--muted)}
+.chip.gold{background:color-mix(in oklab,var(--gold) 15%,transparent);border-color:color-mix(in oklab,var(--gold) 35%,transparent);color:var(--gold-2)}
+html[data-theme="dark"] .chip.gold{color:var(--gold)}
+.lesson .caret{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.3s}
+.lesson[open] .caret{transform:rotate(180deg);background:var(--grad);border-color:transparent;color:#20160A}
+.lesson .body{padding:0 24px 26px;border-top:1px solid var(--line);margin-top:4px;padding-top:20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer;
+  font-weight:700;font-size:14.5px;color:var(--muted);transition:.2s}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+html[data-theme="dark"] .tab.active{background:var(--grad);color:#20160A}
+.tabpane{display:none;animation:fade .35s ease}
+.tabpane.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+ul.clean{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+ul.clean li{display:flex;gap:10px;font-size:15.5px}
+ul.clean li::before{content:"◆";color:var(--gold-2);font-size:12px;margin-top:6px}
+/* الشرح الموسّع: صفحة الكتاب نصًا وصورة */
+.pagecard{display:grid;grid-template-columns:210px 1fr;gap:18px;padding:18px;border:1px solid var(--line);
+  border-radius:var(--radius-sm);background:var(--surface-2);margin-bottom:14px}
+.pagecard img{border-radius:10px;border:1px solid var(--line);cursor:zoom-in;background:#fff}
+.pagecard .num{font-size:12.5px;font-weight:800;color:var(--gold-2);margin-bottom:6px}
+.pagecard p{font-size:15.5px;margin:0 0 .55em}
+@media(max-width:760px){.pagecard{grid-template-columns:1fr}.pagecard img{max-width:260px;margin-inline:auto}}
+.more{display:block;width:100%;margin-top:6px}
+
+/* ==========================================================================
+   6) قارئ الكتاب
+   ========================================================================== */
+.reader{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden}
+.reader .top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--line);
+  background:var(--surface-2)}
+.reader .top .spacer{margin-inline-start:auto}
+.reader input[type="number"],.reader input[type="search"]{border:1px solid var(--line);background:var(--surface);
+  color:var(--text);border-radius:10px;padding:8px 12px;font-family:inherit;font-size:15px;width:110px}
+.reader input[type="search"]{width:190px}
+.reader .stage{display:grid;grid-template-columns:1.05fr .95fr;gap:0;min-height:520px}
+.reader .page{background:var(--surface-2);display:grid;place-items:center;padding:22px;position:relative}
+.reader .page img{border-radius:12px;box-shadow:var(--shadow);max-height:74vh;background:#fff;transition:.3s}
+.reader .text{padding:24px;border-inline-start:1px solid var(--line);max-height:74vh;overflow:auto}
+.reader .text h4{color:var(--gold-2);font-size:14px;letter-spacing:1px}
+.reader .text p{font-size:15.5px;margin:0 0 .5em;color:var(--text)}
+.reader .nav{display:flex;gap:10px;align-items:center;justify-content:center;padding:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:12px 14px;border-top:1px solid var(--line);background:var(--surface-2)}
+.thumbs img{width:64px;border-radius:6px;border:2px solid transparent;cursor:pointer;flex:0 0 auto;background:#fff}
+.thumbs img.on{border-color:var(--gold)}
+@media(max-width:900px){.reader .stage{grid-template-columns:1fr}.reader .text{border-inline-start:0;border-top:1px solid var(--line);max-height:none}}
+.searchres{max-height:230px;overflow:auto;border-top:1px solid var(--line)}
+.searchres button{display:block;width:100%;text-align:start;background:transparent;border:0;border-bottom:1px solid var(--line);
+  padding:10px 16px;cursor:pointer;color:var(--text);font-size:14.5px}
+.searchres button:hover{background:var(--surface-2)}
+.searchres mark{background:color-mix(in oklab,var(--gold) 45%,transparent);color:inherit;border-radius:3px}
+
+/* ==========================================================================
+   7) المعرض والصندوق المنبثق
+   ========================================================================== */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.gitem{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);cursor:zoom-in}
+.gitem img{aspect-ratio:3/4;object-fit:cover;object-position:top;transition:.45s}
+.gitem:hover img{transform:scale(1.06)}
+.gitem span{position:absolute;inset-block-end:0;inset-inline:0;padding:10px 12px;font-size:13px;font-weight:700;color:#fff;
+  background:linear-gradient(transparent,rgba(6,18,30,.88))}
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(4,12,20,.92);display:none;place-items:center;padding:24px}
+.lightbox.on{display:grid}
+.lightbox img{max-width:min(96vw,1000px);max-height:88vh;border-radius:12px;box-shadow:0 40px 80px -20px #000}
+.lightbox .close{position:absolute;inset-block-start:20px;inset-inline-end:20px}
+
+/* ==========================================================================
+   8) الاختبار / الأسئلة / التواصل
+   ========================================================================== */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px;margin-bottom:12px}
+.q p{font-weight:700;margin-bottom:10px}
+.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer}
+.opt:hover{border-color:var(--gold)}
+.opt.right{border-color:#22A06B;background:color-mix(in oklab,#22A06B 12%,transparent)}
+.opt.wrong{border-color:#D4553F;background:color-mix(in oklab,#D4553F 12%,transparent)}
+.faq{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:10px}
+.faq summary{cursor:pointer;font-weight:700;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq p{color:var(--muted);margin:10px 0 0}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font-weight:700;font-size:14.5px}
+.field input,.field textarea{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;
+  padding:12px 14px;font-family:inherit;font-size:16px}
+.field input:focus,.field textarea:focus{outline:2px solid color-mix(in oklab,var(--gold) 60%,transparent);border-color:var(--gold)}
+
+/* أزرار عائمة */
+.fab{position:fixed;inset-block-end:22px;inset-inline-start:22px;z-index:55;display:flex;flex-direction:column;gap:10px}
+.fab a,.fab button{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;border:0;cursor:pointer;
+  box-shadow:var(--shadow-lg);transition:.25s;color:#20160A;background:var(--grad)}
+.fab a:hover,.fab button:hover{transform:translateY(-4px) scale(1.05)}
+.fab .up{background:var(--surface);color:var(--text);border:1px solid var(--line)}
+
+/* التذييل */
+footer{background:linear-gradient(160deg,var(--navy-2),#0B2A46);color:#C7DAEA;padding:56px 0 26px;margin-top:10px}
+footer h4{color:#fff}
+footer a{color:#C7DAEA}
+footer a:hover{color:var(--gold)}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr}}
+.fbottom{border-top:1px solid rgba(255,255,255,.12);margin-top:32px;padding-top:18px;font-size:14px;display:flex;
+  justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* حركات الظهور */
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="progress"><i id="prog"></i></div>
+
+<header id="header">
+  <div class="wrap bar">
+    <a class="brand" href="#home">
+      <span class="mark">SP</span>
+      <span>جودة إنشاء شبكة التوزيع الأرضية<small>TSC SP128</small></span>
+    </a>
+    <nav class="main" id="nav"></nav>
+    <div class="tools">
+      <a class="icon-btn" id="dlTop" href="assets/docs/SP128.pdf" download title="تحميل الكتاب PDF" aria-label="تحميل الكتاب PDF">⭳</a>
+      <button class="icon-btn" id="themeBtn" title="تبديل الوضع الليلي" aria-label="تبديل الوضع الليلي">☾</button>
+      <button class="icon-btn burger" id="burger" aria-label="القائمة">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== الرئيسية ===================== -->
+<section class="hero" id="home">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="grid-lines"></span>
+  <div class="wrap">
+    <div>
+      <div class="pill-row">
+        <span class="pill">٥ دروس</span><span class="pill">١٢ ساعة تدريبية</span>
+        <span class="pill">١٨٤ صفحة</span><span class="pill">الشركة السعودية للكهرباء</span>
+      </div>
+      <h1>جودة إنشاء <span>شبكة التوزيع الأرضية</span></h1>
+      <p>منصة تدريبية عربية متكاملة مبنية على الكتاب التدريبي <strong>TSC SP128</strong>؛
+         شرح موسّع لكل درس بنصوص الكتاب كما هي، قارئ تفاعلي لصفحات الكتاب الـ١٨٤،
+         معرض للأشكال والرسومات، اختبارات فورية، وتحميل مباشر للكتاب الأصلي.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="assets/docs/SP128.pdf" download>⭳ تحميل الكتاب PDF</a>
+        <a class="btn btn-ghost" style="color:#EAF2FA;border-color:rgba(255,255,255,.3)" href="#reader">📖 استعراض الكتاب</a>
+        <a class="btn btn-ghost" style="color:#EAF2FA;border-color:rgba(255,255,255,.3)" href="#lessons">ابدأ الدروس ←</a>
+      </div>
+    </div>
+    <div>
+      <div class="cover-card"><img src="assets/images/cover.jpg" alt="غلاف كتاب جودة إنشاء شبكة التوزيع الأرضية TSC SP128" /></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="stats" id="stats"></div></div>
+</section>
+
+<!-- ===================== من نحن ===================== -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ عن البرنامج</span>
+      <h2>هدف البرنامج والجدارات المستهدفة</h2>
+      <p class="lead" id="aboutIntro"></p>
+    </div>
+    <div class="grid g3" id="aboutGrid"></div>
+    <h3 style="margin:44px 0 16px">مخرجات التعلّم</h3>
+    <div class="outcomes" id="outcomes"></div>
+  </div>
+</section>
+
+<!-- ===================== الخدمات ===================== -->
+<section class="section alt" id="services">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ ماذا تقدّم المنصة</span>
+      <h2>خدمات تعليمية شاملة حول الكتاب</h2>
+      <p class="lead">كل ما يحتاجه المفتش والفني ومنفّذ الأعمال في مكان واحد، بنفس محتوى الكتاب الرسمي دون تغيير.</p>
+    </div>
+    <div class="grid g3" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== الدروس ===================== -->
+<section class="section" id="lessons">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ المنهج</span>
+      <h2>الدروس الخمسة — شرح موسّع</h2>
+      <p class="lead">اضغط على أي درس لعرض الوصف والأهداف والشرح الموسّع المأخوذ نصًا من صفحات الكتاب،
+         مع صور الصفحات والأشكال التوضيحية الخاصة به.</p>
+    </div>
+    <div id="lessonsList"></div>
+  </div>
+</section>
+
+<!-- ===================== قارئ الكتاب ===================== -->
+<section class="section alt" id="reader">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ الكتاب كاملًا</span>
+      <h2>استعراض ملف الكتاب — ١٨٤ صفحة</h2>
+      <p class="lead">تصفّح الكتاب صفحة بصفحة بالصورة والنص، مع بحث داخل كل الصفحات، وتكبير، وشريط مصغّرات،
+         وإمكانية فتح ملف الـPDF الأصلي أو تحميله.</p>
+    </div>
+
+    <div class="reader reveal">
+      <div class="top">
+        <button class="btn btn-sm btn-solid" id="rPrev">→ السابق</button>
+        <button class="btn btn-sm btn-solid" id="rNext">التالي ←</button>
+        <label style="font-size:14px;color:var(--muted)">صفحة</label>
+        <input type="number" id="rNum" min="1" max="184" value="1" />
+        <span style="font-size:14px;color:var(--muted)">/ 184</span>
+        <input type="search" id="rSearch" placeholder="🔍 ابحث داخل الكتاب…" />
+        <span class="spacer"></span>
+        <button class="btn btn-sm btn-ghost" id="rZoom">＋ تكبير</button>
+        <a class="btn btn-sm btn-ghost" id="rOpenPdf" href="assets/docs/SP128.pdf" target="_blank" rel="noopener">فتح PDF</a>
+        <a class="btn btn-sm btn-gold" href="assets/docs/SP128.pdf" download>⭳ تحميل</a>
+      </div>
+      <div class="searchres" id="rResults" hidden></div>
+      <div class="stage">
+        <div class="page"><img id="rImg" src="assets/images/pages/p-001.jpg" alt="صفحة 1 من الكتاب" /></div>
+        <div class="text" id="rText"></div>
+      </div>
+      <div class="thumbs" id="rThumbs"></div>
+    </div>
+
+    <details class="faq reveal" style="margin-top:18px">
+      <summary>عرض ملف الـPDF الأصلي داخل الصفحة</summary>
+      <p>يُفتح ملف الكتاب الأصلي مضمّنًا هنا (يعتمد العرض على متصفحك، وإن لم يظهر استخدم زر «فتح PDF» أو «تحميل»).</p>
+      <iframe src="assets/docs/SP128.pdf" title="ملف الكتاب الأصلي TSC SP128"
+              style="width:100%;height:70vh;border:1px solid var(--line);border-radius:14px;background:#fff"></iframe>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== الموارد ===================== -->
+<section class="section" id="resources">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ التحميلات</span>
+      <h2>الموارد وملفات التحميل</h2>
+      <p class="lead">حمّل الكتاب الأصلي أو صور الصفحات التي تحتاجها للعمل الميداني.</p>
+    </div>
+    <div class="grid g3" id="resGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== الاختبارات ===================== -->
+<section class="section alt" id="quiz">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ قِس فهمك</span>
+      <h2>اختبار سريع من محتوى الكتاب</h2>
+      <p class="lead">أسئلة قصيرة تُصحَّح مباشرة داخل المتصفح، وكل إجابة مرتبطة بصفحتها في الكتاب.</p>
+    </div>
+    <form id="quizForm" novalidate></form>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:14px">
+      <button class="btn btn-gold" id="quizCheck" type="button">تصحيح الإجابات</button>
+      <button class="btn btn-ghost" id="quizReset" type="button">إعادة</button>
+      <strong id="quizScore"></strong>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== المعرض ===================== -->
+<section class="section" id="gallery">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ الأشكال والرسومات</span>
+      <h2>معرض صور الكتاب</h2>
+      <p class="lead">أشكال الحفريات والوصلات والنهايات الطرفية والممارسات الخاطئة كما وردت في الكتاب. اضغط أي صورة لتكبيرها.</p>
+    </div>
+    <div class="tabs" id="galTabs"></div>
+    <div class="gallery" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== الأسئلة الشائعة ===================== -->
+<section class="section alt" id="faq">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ استفسارات</span>
+      <h2>الأسئلة الشائعة</h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<!-- ===================== التواصل ===================== -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">◆ تواصل</span>
+      <h2>أرسل ملاحظاتك</h2>
+      <p class="lead">النموذج لا يجمع أي بيانات شخصية إضافية، ويُرسل إلى الوجهة التي تحددها في الإعدادات.</p>
+    </div>
+    <div class="grid g2">
+      <form class="card" id="contactForm" novalidate>
+        <div class="field"><label for="cName">الاسم</label><input id="cName" name="name" required /></div>
+        <div class="field"><label for="cSubject">الموضوع</label><input id="cSubject" name="subject" required /></div>
+        <div class="field"><label for="cMsg">الرسالة</label><textarea id="cMsg" name="message" rows="5" required></textarea></div>
+        <div class="field" aria-hidden="true" style="position:absolute;inset-inline-start:-9999px">
+          <label for="cHp">اتركه فارغًا</label><input id="cHp" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="btn btn-gold" type="submit">إرسال</button>
+        <p id="cMsgOut" style="margin-top:12px;color:var(--muted)"></p>
+      </form>
+      <div class="card">
+        <div class="ico">🛡️</div>
+        <h3>الخصوصية</h3>
+        <p>لا يُخزَّن أي بريد إلكتروني أو بيانات شخصية داخل الموقع، ولا توجد أدوات تتبّع أو إعلانات.
+           جميع الملفات محلية داخل المشروع، والمحتوى مأخوذ من الكتاب التدريبي الرسمي دون تعديل في نصوصه.</p>
+        <h3 style="margin-top:18px">الاستخدام</h3>
+        <p>هذا الموقع مرجع تدريبي مساند، ولا يغني عن المواصفات القياسية المعتمدة (SDMS) ولا عن تعليمات السلامة في الموقع.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="brand" style="color:#fff"><span class="mark">SP</span>
+          <span>جودة إنشاء شبكة التوزيع الأرضية<small>TSC SP128</small></span></div>
+        <p style="margin-top:14px;max-width:46ch">منصة تدريبية عربية مبنية على الكتاب التدريبي الرسمي، بخمسة دروس واثنتي عشرة ساعة تدريبية.</p>
+        <a class="btn btn-gold btn-sm" href="assets/docs/SP128.pdf" download>⭳ تحميل الكتاب</a>
+      </div>
+      <div><h4>روابط الموقع</h4><ul class="clean" id="footNav" style="gap:6px"></ul></div>
+      <div><h4>محتوى الكتاب</h4>
+        <ul class="clean" style="gap:6px">
+          <li>الدرس الأول: تمديد كابلات الجهد المتوسط</li>
+          <li>الدرس الثاني: النهايات الطرفية للجهد المتوسط</li>
+          <li>الدرس الثالث: تمديد كابلات الجهد المنخفض</li>
+          <li>الدرس الرابع: النهايات الطرفية للجهد المنخفض</li>
+          <li>الدرس الخامس: الممارسات الخاطئة</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbottom"><span>© <span id="year"></span> — جميع النصوص من الكتاب التدريبي TSC SP128.</span>
+      <span>صُمم بواجهة عربية RTL بدون مكتبات خارجية.</span></div>
+  </div>
+</footer>
+
+<div class="fab">
+  <a href="assets/docs/SP128.pdf" download title="تحميل الكتاب PDF" aria-label="تحميل الكتاب PDF">⭳</a>
+  <button class="up" id="toTop" title="أعلى الصفحة" aria-label="أعلى الصفحة">↑</button>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="icon-btn close" id="lbClose" aria-label="إغلاق">✕</button>
+  <img id="lbImg" src="" alt="صورة مكبّرة من الكتاب" />
+</div>
+
+<script src="assets/data/book.js"></script>
+<script>
+/* ==========================================================================
+   البيانات — عدّل هنا فقط
+   ========================================================================== */
+const SITE_DATA = {
+  links:{
+    pdf:"assets/docs/SP128.pdf",
+    whatsapp:"[أضف الرابط هنا]",
+    formEndpoint:"[أضف الرابط هنا]"
+  },
+  nav:[
+    {id:"home",label:"الرئيسية"},{id:"about",label:"عن البرنامج"},{id:"services",label:"الخدمات"},
+    {id:"lessons",label:"الدروس"},{id:"reader",label:"استعراض الكتاب"},{id:"resources",label:"التحميلات"},
+    {id:"quiz",label:"الاختبار"},{id:"gallery",label:"المعرض"},{id:"faq",label:"الأسئلة"},{id:"contact",label:"التواصل"}
+  ],
+  stats:[
+    {value:5,label:"دروس تدريبية"},{value:12,label:"ساعة تدريبية"},
+    {value:184,label:"صفحة في الكتاب"},{value:3,label:"جدارات مستهدفة"}
+  ],
+  aboutIntro:"الهدف الرئيسي لهذه الدورة التدريبية هو أن يتعرف الفني ومنفذ الأعمال والمشرف على الإنشاءات والتعديلات لشبكة خطوط التوزيع الأرضية على أنظمة الشركة التي على أساسها سوف يراقب أعمال المقاول ويتأكد من مطابقة التنفيذ للمواصفات والأنظمة المعمول بها في الشركة، مما سيؤدي إلى جودة تنفيذ الإنشاءات المطلوبة وسرعة تنفيذ المشاريع.",
+  about:[
+    {icon:"◆",title:"إنشاء شبكة التوزيع الأرضية",text:"بناء الجدارة اللازمة لتنفيذ أعمال الإنشاء والتعديل على الشبكة الأرضية وفق مواصفات الشركة."},
+    {icon:"◈",title:"مراقبة الأداء",text:"تمكين المفتش من متابعة أعمال المقاول والتحقق من مطابقة التنفيذ للأنظمة المعمول بها."},
+    {icon:"✓",title:"الفحص والاختبار",text:"إتقان أعمال المعاينة بعد الإنشاء واستخدام نماذج المعاينة المعتمدة."}
+  ],
+  outcomes:[
+    "تحديد مكونات شبكة التوزيع الأرضية ومواصفات المواد القياسية المستخدمة.",
+    "الإشراف على تنفيذ مشاريع شبكات التوزيع الأرضية بمراحلها المختلفة وفق المواصفات والمقاييس الخاصة بالشركة السعودية للكهرباء.",
+    "الإشراف على تنفيذ أعمال التأريض اللازمة لشبكة التوزيع الأرضية وفق المواصفات القياسية.",
+    "القيام بأعمال معاينة الشبكة الأرضية بعد الإنشاء واستخدام نماذج المعاينة.",
+    "تحديد الممارسات الخاطئة التي يمكن أن تُرتكب أثناء تنفيذ الأعمال على شبكة التوزيع الأرضية."
+  ],
+  services:[
+    {icon:"📘",title:"شرح موسّع لكل درس",text:"نص الكتاب كاملًا موزّعًا على الدروس صفحة بصفحة، مع صورة كل صفحة بجانب نصها."},
+    {icon:"📖",title:"استعراض الكتاب",text:"قارئ تفاعلي لصفحات الكتاب الـ184 مع بحث نصّي، وتكبير، ومصغّرات، وعرض ملف PDF."},
+    {icon:"⭳",title:"تحميل مباشر",text:"أيقونة تحميل ثابتة في كل الصفحات لتنزيل الكتاب الأصلي PDF بضغطة واحدة."},
+    {icon:"🖼",title:"معرض الأشكال",text:"صور الحفريات والوصلات والنهايات الطرفية والممارسات الخاطئة مصنّفة حسب الدرس."},
+    {icon:"🧪",title:"اختبارات فورية",text:"أسئلة تُصحَّح داخل المتصفح مع الإشارة إلى صفحة الإجابة في الكتاب."},
+    {icon:"📱",title:"تصميم متجاوب وليلي",text:"واجهة عربية RTL بوضعين فاتح وليلي تعمل على الجوال واللوحي والحاسب."}
+  ],
+  lessons:[
+    {no:1,hours:3,from:9,to:52,title:"تمديد الكابلات ذات الجهد المتوسط",competency:"التركيبات",
+     desc:"يشرح هذا الدرس إجراءات وشروط حفر وشق الخنادق، ومواصفات مواد دفن الكابل، ومواصفات استخدام العبّارات والمواسير البلاستيكية، وكذلك عمليات الدك والتسوية والسفلتة، ومسؤوليات المفتش تجاه إلزام المقاول بإعادة الوضع وتسوية المسار.",
+     topics:["مسار الكابل والتجهيزات قبل الحفر","أعماق الحفريات: 650مم للجهد المنخفض و800مم للجهد المتوسط و950مم مع ماسورة الاتصالات","قطع الإسفلت وأعمال الحفر والدعم الجانبي للخندق","فرشة الرمل وبلاط الكابل وشريط التحذير","الردم والدك حتى 95% وإعادة الوضع والتسوية","مناولة بكرات الكابل ونقلها وتمديدها بالإسطوانات","تقاطع مسار الكابل مع المرافق الأخرى والخلوص المطلوب"],
+     objectives:[
+      "يحدد شروط حفر وشق الخنادق ومواصفات مواد دفن الكابل (فرشة الرمل وبلاط الكابل وشريط التحذير).",
+      "يتعرف على الشروط القياسية لمناولة الكابلات يدويًا وآليًا.",
+      "يتعرف على شروط تقاطع مسار كابل الشركة مع كابل آخر أو المرافق الأخرى.",
+      "يحدد مواصفات استخدام العبّارات والمواسير البلاستيكية.",
+      "يشرح عمليات الدك والتسوية والسفلتة لمسار الكابل طبقًا للمواصفات القياسية المطلوبة.",
+      "يشرح كيفية التأكد من استواء المسار.",
+      "يذكر مسؤوليات المفتش تجاه التزام المقاول بإعادة الوضع وتسوية المسار."]},
+    {no:2,hours:2,from:53,to:92,title:"أعمال تركيب النهايات الطرفية لكابلات الجهد المتوسط",competency:"وصل الكابلات · مراقبة الأداء",
+     desc:"يشرح هذا الدرس عمليات تركيب النهايات الطرفية لكابلات الجهد المتوسط والاحتياطات الواجب اتخاذها عند تنفيذ العملية.",
+     topics:["فائدة النهاية الطرفية ومكوّنات الوصلة","النهايات الداخلية والخارجية بطريقة التقلّص الحراري","توصيل الكابل بالمعدة وأغطية الإحكام الواقية","ربط نهاية الكابل على عمود بحامل تثبيت وعوازل","النهايات الطرفية للكابلات ثلاثية القلوب","تأريض كابلات الجهد المتوسط ومواصفاته القياسية","محوّلات الأجهزة ومبيّن خطأ التماس بالأرض"],
+     objectives:[
+      "يذكر فائدة النهاية الطرفية للأطراف ومكوّنات الوصلة وفائدة كل جزء.",
+      "يشرح الطريقة الصحيحة لعمل وصلة نهاية طرفية داخلية/خارجية لكابلات الجهد المتوسط أحادية القلوب بطريقة التقلّص الحراري.",
+      "يشرح الطريقة الصحيحة لتوصيل الكابل للمعدة وتركيب أغطية الإحكام الواقية المستقيمة.",
+      "يشرح الطريقة الصحيحة لربط نهاية الكابل على عمود باستعمال حامل تثبيت وعوازل.",
+      "يشرح الطريقة الصحيحة لعمل وصلة نهاية طرفية لكابلات ثلاثية القلوب بطريقة التقلّص الحراري.",
+      "يشرح ربط كابل ثلاثي القلوب بالمعدة باستعمال الأغطية العازلة ذات الزاوية القائمة.",
+      "يشرح الاحتياطات الواجب اتخاذها عند عمل نهاية طرفية خارجية لكابل جهد متوسط.",
+      "يشرح كيفية تأريض كابلات الجهد المتوسط والمواصفات القياسية للتأريض.",
+      "يشرح محوّلات الأجهزة وفائدتها، وتركيب مبيّن خطأ التماس بالأرض وفائدته."]},
+    {no:3,hours:3,from:93,to:126,title:"تمديد كابلات الجهد المنخفض",competency:"التركيبات",
+     desc:"مادة تعليمية تغطي تمديد كابلات الجهد المنخفض بطريقة الدفن المباشر ومواصفات الحفر والردم والمناولة وإعادة الوضع.",
+     topics:["الدفن المباشر لكابلات الجهد المنخفض","مواصفات حفر وشق الخنادق ومواد الدفن","الشروط القياسية لمناولة الكابلات يدويًا وآليًا","العبّارات والمواسير البلاستيكية","الدك والتسوية والسفلتة والتأكد من استواء المسار","إعادة الوضع وتسوية المسار"],
+     objectives:[
+      "يشرح تمديد كابلات الجهد المنخفض بطريقة الدفن المباشر.",
+      "يذكر مواصفات حفر وشق الخنادق ومواصفات مواد دفن الكابل.",
+      "يذكر الشروط القياسية لمناولة الكابلات يدويًا وآليًا.",
+      "يذكر مواصفات استخدام العبّارات والمواسير البلاستيكية.",
+      "يصف عمليات الدك والتسوية والسفلتة وكيفية التأكد من استواء المسار.",
+      "يشرح كيفية إعادة الوضع وتسوية المسار."]},
+    {no:4,hours:2,from:127,to:144,title:"النهايات الطرفية لكابلات الجهد المنخفض",competency:"التركيبات",
+     desc:"يمكّن هذا الدرس المفتش من الإشراف الصحيح على أعمال نهايات كابلات الجهد المنخفض ومتطلبات ملحقاتها وفحصها، اعتمادًا على مواصفة SDMS-01-11.",
+     topics:["المواصفات القياسية لكابلات الجهد المنخفض (SDMS-01-11)","المواصفات القياسية للنهايات الطرفية","متطلبات ملحقات وصل وعمل النهايات الطرفية","أنواع الفحص والاختبارات للملحقات","خطوات تركيب الوصلات والنهايات"],
+     objectives:[
+      "يذكر المواصفات القياسية لكابلات الجهد المنخفض.",
+      "يشرح المواصفات القياسية للنهايات الطرفية لكابلات الجهد المنخفض.",
+      "يشرح المواصفات القياسية لمتطلبات ملحقات وصل وعمل النهايات الطرفية.",
+      "يذكر أنواع فحص واختبارات ملحقات وصل النهايات الطرفية للكابلات.",
+      "يشرح خطوات تركيب وصلات ونهايات كابلات الجهد المنخفض."]},
+    {no:5,hours:2,from:145,to:181,title:"الممارسات الخاطئة في أعمال شبكة التوزيع الأرضية",competency:"مراقبة الأداء · الفحص والاختبار",
+     desc:"يستعرض هذا الدرس أبرز الممارسات الخاطئة التي ترتكب أثناء تنفيذ الأعمال على شبكة التوزيع الأرضية وأسبابها وطرق تفاديها.",
+     topics:["معالجة الكابلات التالفة","احتراق النهاية الطرفية للكابل وأسبابه","ضعف جودة تنفيذ اللحام والتفريغ على النهاية","تسرب المياه وعدم إقفال الفتحات","عدم توصيل الأرضي بطريقة قياسية","أخطاء الحفر والردم وإعادة الوضع"],
+     objectives:[
+      "يحدد الممارسات الخاطئة الشائعة في أعمال الشبكة الأرضية.",
+      "يذكر أسباب أعطال النهايات الطرفية والوصلات.",
+      "يشرح الإجراءات الصحيحة لتفادي هذه الممارسات.",
+      "يستخدم نماذج المعاينة للتحقق من جودة التنفيذ."]}
+  ],
+  resources:[
+    {icon:"📕",title:"الكتاب الأصلي — TSC SP128",text:"ملف PDF كامل بـ184 صفحة (النسخة المستخدمة في بناء الموقع).",href:"assets/docs/SP128.pdf",dl:true,cta:"⭳ تحميل PDF"},
+    {icon:"📖",title:"قارئ الصفحات",text:"استعراض الكتاب صفحة بصفحة بالصورة والنص مع البحث الداخلي.",href:"#reader",dl:false,cta:"فتح القارئ ←"},
+    {icon:"🖼",title:"صور الصفحات",text:"صور جميع الصفحات داخل مجلد assets/images/pages بصيغة JPG جاهزة للطباعة.",href:"#gallery",dl:false,cta:"عرض المعرض ←"}
+  ],
+  quiz:[
+    {q:"ما عمق حفرية كابل الجهد المتوسط حسب الكتاب؟",a:["650 مم","800 مم","950 مم"],c:1,p:14},
+    {q:"ما عمق الحفرية لكابلات الجهد المنخفض؟",a:["650 مم","800 مم","1000 مم"],c:0,p:14},
+    {q:"ما سماكة فرشة الرمل الناعم أسفل وأعلى الكابل؟",a:["5 سم","10 سم","20 سم"],c:1,p:23},
+    {q:"نسبة الدك المطلوبة عند الردم حول المنشآت هي:",a:["85%","90%","95%"],c:2,p:15},
+    {q:"أقصى عمق لوضع شريط التحذير فوق الكابل داخل الردم:",a:["30 سم","50 سم","70 سم"],c:1,p:24},
+    {q:"اتساع قطع الإسفلت بالمنشار لا يقل عن (وزارة الشؤون البلدية والقروية):",a:["10 سم","15 سم","25 سم"],c:1,p:21},
+    {q:"عدد ساعات البرنامج التدريبي كاملًا:",a:["8 ساعات","12 ساعة","16 ساعة"],c:1,p:5},
+    {q:"من أسباب احتراق النهاية الطرفية للكابل:",a:["ضعف جودة تنفيذ اللحام","زيادة عمق الحفرية","استخدام بلاط الكابل"],c:0,p:151}
+  ],
+  galleryTabs:[
+    {label:"كل الصور",from:1,to:184},
+    {label:"الدرس الأول",from:13,to:52},
+    {label:"الدرس الثاني",from:57,to:92},
+    {label:"الدرس الثالث",from:97,to:126},
+    {label:"الدرس الرابع",from:131,to:144},
+    {label:"الدرس الخامس",from:149,to:181}
+  ],
+  /* أرقام صفحات الأشكال المختارة للمعرض */
+  figures:[15,16,17,18,19,20,21,24,25,26,27,29,31,33,37,45,60,67,72,80,85,100,108,115,131,140,151,158,164,166,175],
+  faq:[
+    {q:"هل النصوص معدّلة عن الكتاب؟",a:"لا. جميع نصوص الشرح الموسّع مستخرجة من صفحات الكتاب كما هي، ومرتبطة برقم صفحتها الأصلي."},
+    {q:"كيف أحمّل الكتاب؟",a:"من أيقونة التحميل ⭳ في أعلى الصفحة أو الزر العائم أسفل الشاشة أو من قسم التحميلات."},
+    {q:"هل يعمل الموقع بدون إنترنت؟",a:"نعم بعد تنزيله محليًا، باستثناء خط Tajawal الذي يُحمَّل من Google Fonts؛ وإن تعذّر يستبدله المتصفح بخط النظام."},
+    {q:"كيف أنشره على GitHub Pages؟",a:"ارفع محتوى المجلد كما هو (index.html و assets) إلى المستودع ثم فعّل GitHub Pages من إعدادات المستودع."},
+    {q:"هل يمكن إضافة درس أو تعديل نص؟",a:"نعم، كل البيانات في كائن SITE_DATA أسفل ملف index.html، ونص الكتاب في assets/data/book.js."}
+  ]
+};
+
+/* ==========================================================================
+   أدوات مساعدة
+   ========================================================================== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+function el(t,a={},kids=[]){const n=document.createElement(t);
+  for(const k in a){ if(k==="text") n.textContent=a[k]; else if(k==="html") n.innerHTML=a[k]; else n.setAttribute(k,a[k]); }
+  kids.forEach(c=>n.appendChild(c)); return n;}
+const PAGES = window.BOOK_PAGES || [];
+const pageImg = n => "assets/images/pages/p-"+String(n).padStart(3,"0")+".jpg";
+const pageText = n => (PAGES.find(p=>p.n===n)||{t:[]}).t;
+
+/* ==========================================================================
+   البناء
+   ========================================================================== */
+function buildNav(){
+  const nav=$("#nav"), foot=$("#footNav");
+  SITE_DATA.nav.forEach(i=>{
+    nav.appendChild(el("a",{href:"#"+i.id,text:i.label}));
+    const li=el("li"); li.appendChild(el("a",{href:"#"+i.id,text:i.label})); foot.appendChild(li);
+  });
+}
+function buildStats(){
+  const box=$("#stats");
+  SITE_DATA.stats.forEach(s=>{
+    const d=el("div",{class:"stat"});
+    d.appendChild(el("b",{"data-target":String(s.value),text:"0"}));
+    d.appendChild(el("span",{text:s.label}));
+    box.appendChild(d);
+  });
+}
+function animateCounters(){
+  $$("#stats b").forEach(n=>{
+    if(n.dataset.done) return; n.dataset.done="1";
+    const target=+n.dataset.target; const t0=performance.now(), dur=1400;
+    const step=t=>{const k=Math.min(1,(t-t0)/dur); n.textContent=Math.round(target*(1-Math.pow(1-k,3)));
+      if(k<1) requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+  });
+}
+function buildAbout(){
+  $("#aboutIntro").textContent=SITE_DATA.aboutIntro;
+  const g=$("#aboutGrid");
+  SITE_DATA.about.forEach(a=>{
+    const c=el("div",{class:"card reveal"});
+    c.appendChild(el("div",{class:"ico",text:a.icon}));
+    c.appendChild(el("h3",{text:a.title}));
+    c.appendChild(el("p",{text:a.text}));
+    g.appendChild(c);
+  });
+  const o=$("#outcomes");
+  SITE_DATA.outcomes.forEach((t,i)=>{
+    const d=el("div",{class:"outcome reveal"});
+    d.appendChild(el("i",{text:String(i+1)}));
+    d.appendChild(el("span",{text:t}));
+    o.appendChild(d);
+  });
+}
+function buildServices(){
+  const g=$("#servicesGrid");
+  SITE_DATA.services.forEach(s=>{
+    const c=el("div",{class:"card reveal"});
+    c.appendChild(el("div",{class:"ico",text:s.icon}));
+    c.appendChild(el("h3",{text:s.title}));
+    c.appendChild(el("p",{text:s.text}));
+    g.appendChild(c);
+  });
+}
+function buildResources(){
+  const g=$("#resGrid");
+  SITE_DATA.resources.forEach(r=>{
+    const c=el("div",{class:"card reveal"});
+    c.appendChild(el("div",{class:"ico",text:r.icon}));
+    c.appendChild(el("h3",{text:r.title}));
+    c.appendChild(el("p",{text:r.text}));
+    const a=el("a",{class:"btn btn-sm "+(r.dl?"btn-gold":"btn-ghost"),href:r.href,text:r.cta,style:"margin-top:14px"});
+    if(r.dl) a.setAttribute("download","");
+    c.appendChild(a);
+    g.appendChild(c);
+  });
+}
+
+/* --- الدروس مع الشرح الموسّع --- */
+function lessonPages(l){
+  return PAGES.filter(p=>p.n>=l.from && p.n<=l.to && p.t.length>2);
+}
+function buildLessons(){
+  const box=$("#lessonsList");
+  SITE_DATA.lessons.forEach(l=>{
+    const d=el("details",{class:"lesson reveal"});
+    const s=el("summary");
+    s.appendChild(el("div",{class:"no",text:String(l.no)}));
+    const mid=el("div");
+    mid.appendChild(el("h3",{text:l.title}));
+    const meta=el("div",{class:"meta"});
+    meta.appendChild(el("span",{class:"chip gold",text:l.hours+" ساعات تدريبية"}));
+    meta.appendChild(el("span",{class:"chip",text:"صفحات "+l.from+" – "+l.to}));
+    meta.appendChild(el("span",{class:"chip",text:l.competency}));
+    mid.appendChild(meta); s.appendChild(mid);
+    s.appendChild(el("span",{class:"caret",text:"⌄"}));
+    d.appendChild(s);
+
+    const body=el("div",{class:"body"});
+    /* التبويبات */
+    const tabs=el("div",{class:"tabs"});
+    const names=["نظرة عامة","أهداف الدرس","الشرح الموسّع","صور الدرس"];
+    const panes=names.map((n,i)=>el("div",{class:"tabpane"+(i===0?" show":"")}));
+    names.forEach((n,i)=>{
+      const b=el("button",{class:"tab"+(i===0?" active":""),type:"button",text:n});
+      b.onclick=()=>{ $$(".tab",tabs).forEach(x=>x.classList.remove("active")); b.classList.add("active");
+        panes.forEach(p=>p.classList.remove("show")); panes[i].classList.add("show");
+        if(i===2) fillExpanded(panes[2],l); if(i===3) fillFigs(panes[3],l); };
+      tabs.appendChild(b);
+    });
+    body.appendChild(tabs);
+
+    /* 1) نظرة عامة */
+    panes[0].appendChild(el("p",{text:l.desc}));
+    panes[0].appendChild(el("h4",{text:"أبرز الموضوعات"}));
+    const ul=el("ul",{class:"clean"});
+    l.topics.forEach(t=>{const li=el("li"); li.appendChild(el("span",{text:t})); ul.appendChild(li);});
+    panes[0].appendChild(ul);
+    const open=el("button",{class:"btn btn-sm btn-solid",type:"button",text:"📖 افتح هذا الدرس في القارئ",style:"margin-top:16px"});
+    open.onclick=()=>{ goPage(l.from); document.getElementById("reader").scrollIntoView({behavior:"smooth"}); };
+    panes[0].appendChild(open);
+
+    /* 2) الأهداف */
+    const ul2=el("ul",{class:"clean"});
+    l.objectives.forEach(t=>{const li=el("li"); li.appendChild(el("span",{text:t})); ul2.appendChild(li);});
+    panes[1].appendChild(el("p",{text:"بعد إنهاء هذا الدرس يكون المتدرب قادرًا على:",style:"color:var(--muted)"}));
+    panes[1].appendChild(ul2);
+
+    panes.forEach(p=>body.appendChild(p));
+    d.appendChild(body);
+    box.appendChild(d);
+  });
+}
+function fillExpanded(pane,l){
+  if(pane.dataset.filled) return; pane.dataset.filled="1";
+  const pages=lessonPages(l);
+  if(!pages.length){ pane.appendChild(el("p",{text:"لا يوجد نص مستخرج لهذا النطاق."})); return; }
+  pane.appendChild(el("p",{class:"chip",text:"النص أدناه مأخوذ حرفيًا من صفحات الكتاب "+l.from+" – "+l.to}));
+  const host=el("div",{style:"margin-top:14px"});
+  pane.appendChild(host);
+  let shown=0;
+  const render=(count)=>{
+    pages.slice(shown,shown+count).forEach(p=>{
+      const c=el("div",{class:"pagecard"});
+      const im=el("img",{src:pageImg(p.n),alt:"صفحة "+p.n+" من الكتاب",loading:"lazy"});
+      im.onclick=()=>openLB(pageImg(p.n));
+      c.appendChild(im);
+      const tx=el("div");
+      tx.appendChild(el("div",{class:"num",text:"صفحة "+p.n}));
+      p.t.forEach(line=>tx.appendChild(el("p",{text:line})));
+      const go=el("button",{class:"btn btn-sm btn-ghost",type:"button",text:"عرض في القارئ"});
+      go.onclick=()=>{goPage(p.n);document.getElementById("reader").scrollIntoView({behavior:"smooth"});};
+      tx.appendChild(go);
+      c.appendChild(tx); host.appendChild(c);
+    });
+    shown+=count;
+    btn.style.display = shown>=pages.length ? "none" : "block";
+    btn.textContent = "عرض المزيد من صفحات الدرس ("+(pages.length-shown)+" متبقية)";
+  };
+  const btn=el("button",{class:"btn btn-ghost more",type:"button"});
+  btn.onclick=()=>render(6);
+  pane.appendChild(btn);
+  render(4);
+}
+function fillFigs(pane,l){
+  if(pane.dataset.filled) return; pane.dataset.filled="1";
+  const g=el("div",{class:"gallery"});
+  for(let n=l.from;n<=l.to;n++){
+    const it=el("div",{class:"gitem"});
+    const im=el("img",{src:pageImg(n),alt:"صفحة "+n,loading:"lazy"});
+    it.appendChild(im); it.appendChild(el("span",{text:"صفحة "+n}));
+    it.onclick=()=>openLB(pageImg(n));
+    g.appendChild(it);
+  }
+  pane.appendChild(g);
+}
+
+/* --- قارئ الكتاب --- */
+let cur=1, zoomed=false;
+function goPage(n){
+  cur=Math.min(184,Math.max(1,n|0));
+  $("#rImg").src=pageImg(cur);
+  $("#rImg").alt="صفحة "+cur+" من الكتاب";
+  $("#rNum").value=cur;
+  const t=pageText(cur), box=$("#rText"); box.innerHTML="";
+  box.appendChild(el("h4",{text:"نص الصفحة "+cur}));
+  if(!t.length) box.appendChild(el("p",{text:"هذه الصفحة تحتوي على أشكال أو صور فقط دون نص قابل للاستخراج.",style:"color:var(--muted)"}));
+  t.forEach(l=>box.appendChild(el("p",{text:l})));
+  box.scrollTop=0;
+  $$("#rThumbs img").forEach(i=>i.classList.toggle("on",+i.dataset.n===cur));
+  const on=$("#rThumbs img.on"); if(on) on.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+}
+function buildReader(){
+  const th=$("#rThumbs");
+  for(let n=1;n<=184;n++){
+    const i=el("img",{src:pageImg(n),alt:"مصغّر صفحة "+n,loading:"lazy","data-n":String(n)});
+    i.onclick=()=>goPage(n); th.appendChild(i);
+  }
+  $("#rPrev").onclick=()=>goPage(cur-1);
+  $("#rNext").onclick=()=>goPage(cur+1);
+  $("#rNum").oninput=e=>goPage(+e.target.value||1);
+  $("#rZoom").onclick=()=>{zoomed=!zoomed;const im=$("#rImg");
+    im.style.maxHeight=zoomed?"none":"74vh"; im.style.width=zoomed?"100%":"auto";
+    $("#rZoom").textContent=zoomed?"－ تصغير":"＋ تكبير";};
+  $("#rImg").onclick=()=>openLB(pageImg(cur));
+  document.addEventListener("keydown",e=>{
+    if(!document.getElementById("reader").getBoundingClientRect().top) return;
+    if(e.key==="ArrowLeft") goPage(cur+1); if(e.key==="ArrowRight") goPage(cur-1);
+  });
+  const res=$("#rResults");
+  $("#rSearch").oninput=e=>{
+    const q=e.target.value.trim();
+    res.innerHTML="";
+    if(q.length<2){res.hidden=true;return;}
+    let hits=0;
+    for(const p of PAGES){
+      const line=p.t.find(l=>l.includes(q));
+      if(line){
+        const b=el("button",{type:"button",html:"<strong>صفحة "+p.n+"</strong> — "+
+          line.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g"),"<mark>"+q+"</mark>")});
+        b.onclick=()=>{goPage(p.n);res.hidden=true;e.target.value="";};
+        res.appendChild(b); hits++;
+        if(hits>=40) break;
+      }
+    }
+    if(!hits) res.appendChild(el("button",{type:"button",text:"لا توجد نتائج مطابقة"}));
+    res.hidden=false;
+  };
+  goPage(1);
+}
+
+/* --- المعرض --- */
+function buildGallery(){
+  const tabs=$("#galTabs"), grid=$("#galleryGrid");
+  const draw=(from,to)=>{
+    grid.innerHTML="";
+    const list=SITE_DATA.figures.filter(n=>n>=from&&n<=to);
+    (list.length?list:Array.from({length:to-from+1},(_,i)=>from+i)).forEach(n=>{
+      const it=el("div",{class:"gitem reveal in"});
+      it.appendChild(el("img",{src:pageImg(n),alt:"شكل من صفحة "+n+" في الكتاب",loading:"lazy"}));
+      it.appendChild(el("span",{text:"صفحة "+n}));
+      it.onclick=()=>openLB(pageImg(n));
+      grid.appendChild(it);
+    });
+  };
+  SITE_DATA.galleryTabs.forEach((t,i)=>{
+    const b=el("button",{class:"tab"+(i===0?" active":""),type:"button",text:t.label});
+    b.onclick=()=>{$$(".tab",tabs).forEach(x=>x.classList.remove("active"));b.classList.add("active");draw(t.from,t.to);};
+    tabs.appendChild(b);
+  });
+  draw(1,184);
+}
+function openLB(src){$("#lbImg").src=src;$("#lightbox").classList.add("on");}
+$("#lbClose")?.addEventListener("click",()=>$("#lightbox").classList.remove("on"));
+document.addEventListener("click",e=>{if(e.target.id==="lightbox")e.target.classList.remove("on");});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#lightbox").classList.remove("on");});
+
+/* --- الاختبار --- */
+function buildQuiz(){
+  const f=$("#quizForm");
+  SITE_DATA.quiz.forEach((q,i)=>{
+    const box=el("div",{class:"q reveal"});
+    box.appendChild(el("p",{text:(i+1)+". "+q.q}));
+    q.a.forEach((a,j)=>{
+      const lab=el("label",{class:"opt"});
+      lab.appendChild(el("input",{type:"radio",name:"q"+i,value:String(j)}));
+      lab.appendChild(el("span",{text:a}));
+      box.appendChild(lab);
+    });
+    box.appendChild(el("div",{class:"chip",text:"المرجع: صفحة "+q.p,style:"margin-top:6px;display:inline-block"}));
+    f.appendChild(box);
+  });
+  $("#quizCheck").onclick=()=>{
+    let score=0;
+    SITE_DATA.quiz.forEach((q,i)=>{
+      const opts=$$('input[name="q"+'+i+'"]');
+      $$('input[name="q'+i+'"]').forEach((inp,j)=>{
+        const lab=inp.closest(".opt"); lab.classList.remove("right","wrong");
+        if(j===q.c) lab.classList.add("right");
+        if(inp.checked && j!==q.c) lab.classList.add("wrong");
+        if(inp.checked && j===q.c) score++;
+      });
+    });
+    $("#quizScore").textContent="نتيجتك: "+score+" من "+SITE_DATA.quiz.length;
+  };
+  $("#quizReset").onclick=()=>{f.reset();$$(".opt").forEach(o=>o.classList.remove("right","wrong"));$("#quizScore").textContent="";};
+}
+
+/* --- الأسئلة الشائعة --- */
+function buildFaq(){
+  const box=$("#faqList");
+  SITE_DATA.faq.forEach(f=>{
+    const d=el("details",{class:"faq reveal"});
+    d.appendChild(el("summary",{text:"◆ "+f.q}));
+    d.appendChild(el("p",{text:f.a}));
+    box.appendChild(d);
+  });
+}
+
+/* --- النموذج --- */
+function initForm(){
+  $("#contactForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const out=$("#cMsgOut");
+    if($("#cHp").value){out.textContent="تعذّر الإرسال.";return;}
+    const ep=SITE_DATA.links.formEndpoint;
+    if(!ep||ep.includes("أضف")){out.textContent="لم يتم ضبط وجهة الإرسال بعد. أضِف الرابط في SITE_DATA.links.formEndpoint.";return;}
+    out.textContent="جارٍ الإرسال…";
+    try{ await fetch(ep,{method:"POST",body:new FormData(e.target)}); out.textContent="تم إرسال رسالتك، شكرًا لك."; e.target.reset(); }
+    catch{ out.textContent="تعذّر الإرسال، حاول لاحقًا."; }
+  });
+}
+
+/* --- الوضع الليلي / التمرير / الظهور --- */
+function initUI(){
+  const root=document.documentElement;
+  const saved=localStorage.getItem("sp128-theme"); if(saved) root.dataset.theme=saved;
+  $("#themeBtn").textContent = root.dataset.theme==="dark" ? "☀" : "☾";
+  $("#themeBtn").onclick=()=>{
+    root.dataset.theme = root.dataset.theme==="dark" ? "light" : "dark";
+    localStorage.setItem("sp128-theme",root.dataset.theme);
+    $("#themeBtn").textContent = root.dataset.theme==="dark" ? "☀" : "☾";
+  };
+  $("#burger").onclick=()=>$("#nav").classList.toggle("open");
+  $$("#nav a").forEach(a=>a.onclick=()=>$("#nav").classList.remove("open"));
+  $("#toTop").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+  $("#year").textContent=new Date().getFullYear();
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12});
+  $$(".reveal").forEach(n=>io.observe(n));
+
+  const secs=SITE_DATA.nav.map(n=>document.getElementById(n.id)).filter(Boolean);
+  const onScroll=()=>{
+    const y=window.scrollY;
+    $("#header").classList.toggle("stuck",y>20);
+    const h=document.body.scrollHeight-innerHeight;
+    $("#prog").style.width=(h>0?(y/h)*100:0)+"%";
+    let id=secs[0]?.id;
+    secs.forEach(s=>{ if(y >= s.offsetTop-140) id=s.id; });
+    $$("#nav a").forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+id));
+    if(y>200) animateCounters();
+  };
+  addEventListener("scroll",onScroll,{passive:true}); onScroll();
+  setTimeout(animateCounters,600);
+}
+
+/* --- الإقلاع --- */
+buildNav(); buildStats(); buildAbout(); buildServices(); buildLessons();
+buildReader(); buildResources(); buildQuiz(); buildGallery(); buildFaq(); initForm(); initUI();
+</script>
+</body>
+</html>
